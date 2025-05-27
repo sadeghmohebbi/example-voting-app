@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voteapp-vote-ingress
+  namespace: vote-app-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: vote.voteapp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vote
+                port:
+                  number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voteapp-result-ingress
+  namespace: vote-app-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: result.voteapp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: result
+                port:
+                  number: 8081
+

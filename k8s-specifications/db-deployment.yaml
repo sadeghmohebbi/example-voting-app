@@ -15,7 +15,7 @@ spec:
         app: db
     spec:
       containers:
-      - image: postgres:15-alpine
+      - image: registry.sample.local/docker_proxy/postgres:15-alpine
         name: postgres
         env:
         - name: POSTGRES_USER

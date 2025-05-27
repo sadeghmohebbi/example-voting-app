@@ -15,7 +15,7 @@ spec:
         app: redis
     spec:
       containers:
-      - image: redis:alpine
+      - image: registry.sample.local/docker_proxy/redis:alpine
         name: redis
         ports:
         - containerPort: 6379
