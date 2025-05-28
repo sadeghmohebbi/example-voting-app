@@ -14,9 +14,13 @@ namespace Worker
     {
         public static int Main(string[] args)
         {
+            string dbConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING"); //"Server=db;Username=postgres;Password=postgres;"
             try
             {
-                var pgsql = OpenDbConnection("Server=db;Username=postgres;Password=postgres;");
+                // this line is for debug only
+                Console.WriteLine($"DB_CONNECTION_STRING: {dbConnectionString}");
+
+                var pgsql = OpenDbConnection(dbConnectionString);
                 var redisConn = OpenRedisConnection("redis");
                 var redis = redisConn.GetDatabase();
 
