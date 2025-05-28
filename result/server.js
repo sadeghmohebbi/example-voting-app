@@ -18,10 +18,11 @@ io.on('connection', function (socket) {
 });
 
 // this is only for debug
-console.log(process.env.DB_CONNECTION_STRING)
+let cnnStr = process.env.DB_CONNECTION_STRING
+console.log(cnnStr)
 
 var pool = new Pool({
-  connectionString: process.env.DB_CONNECTION_STRING
+  connectionString: cnnStr
 });
 
 async.retry(
