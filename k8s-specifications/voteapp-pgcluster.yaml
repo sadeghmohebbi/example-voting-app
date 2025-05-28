@@ -1,0 +1,24 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: voteapp-postgres
+  namespace: vote-app-ns
+spec:
+  instances: 3
+  description: Postgres backend for voteapp.
+  storage:
+    storageClass: local-path
+    size: "2Gi"
+  bootstrap:
+    initdb:
+      database: voteapp
+      owner: voteapp
+      secret: 
+        name: voteapp-postgresql-secret
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+    requests:
+      cpu: "500m"
+      memory: "1Gi"

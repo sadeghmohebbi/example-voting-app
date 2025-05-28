@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: result-debug
+  labels:
+    app: result
+spec:
+  restartPolicy: Never
+  containers:
+  - name: result
+    image: registry.sample.local/library/examplevotingapp_result
+    ports:
+    - containerPort: 80
+      name: result
+    env:
+    - name: DB_CONNECTION_STRING
+      valueFrom:
+        secretKeyRef:
+          name: voteapp-db-secret
+          key: DB_CONNECTION_STRING
+    terminationMessagePolicy: FallbackToLogsOnError
