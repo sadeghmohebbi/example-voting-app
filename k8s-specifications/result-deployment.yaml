@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - image: registry.sample.local/library/examplevotingapp_result
+        imagePullPolicy: Always
         name: result
         ports:
         - containerPort: 80

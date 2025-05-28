@@ -15,5 +15,11 @@ spec:
         app: worker
     spec:
       containers:
-      - image: registry.sample.local/docker_proxy/dockersamples/examplevotingapp_worker
+      - image: registry.sample.local/library/examplevotingapp_worker
         name: worker
+        env:
+        - name: DB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: voteapp-dotnet-db-secret
+              key: DB_CONNECTION_STRING

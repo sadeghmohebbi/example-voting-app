@@ -17,8 +17,11 @@ io.on('connection', function (socket) {
   });
 });
 
+// this is only for debug
+console.log(process.env.DB_CONNECTION_STRING)
+
 var pool = new Pool({
-  connectionString: process.env.PG_CONNECTION_STRING || 'postgres://postgres:postgres@db/postgres'
+  connectionString: process.env.DB_CONNECTION_STRING
 });
 
 async.retry(
