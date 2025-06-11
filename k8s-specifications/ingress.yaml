@@ -26,6 +26,16 @@ spec:
                 name: result
                 port:
                   number: 8081
+    - host: exresult-voteapp.sample.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: exresult
+                port:
+                  number: 8081
     - host: adminer-voteapp.sample.local
       http:
         paths:

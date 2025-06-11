@@ -15,7 +15,7 @@ spec:
         app: result
     spec:
       containers:
-      - image: registry.sample.local/library/examplevotingapp_result
+      - image: registry.sample.local/library/examplevotingapp_result:beta6
         imagePullPolicy: Always
         name: result
         ports:
@@ -26,5 +26,35 @@ spec:
           valueFrom:
             secretKeyRef:
               name: voteapp-db-secret
+              key: DB_CONNECTION_STRING
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: exresult
+  name: exresult
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exresult
+  template:
+    metadata:
+      labels:
+        app: exresult
+    spec:
+      containers:
+      - image: registry.sample.local/library/examplevotingapp_result:beta6
+        imagePullPolicy: Always
+        name: exresult
+        ports:
+        - containerPort: 80
+          name: exresult
+        env:
+        - name: DB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: voteapp-external-db-secret
               key: DB_CONNECTION_STRING
 

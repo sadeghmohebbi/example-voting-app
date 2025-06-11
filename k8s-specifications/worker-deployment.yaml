@@ -23,3 +23,29 @@ spec:
             secretKeyRef:
               name: voteapp-dotnet-db-secret
               key: DB_CONNECTION_STRING
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: exworker
+  name: exworker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exworker
+  template:
+    metadata:
+      labels:
+        app: exworker
+    spec:
+      containers:
+      - image: registry.sample.local/library/examplevotingapp_worker
+        name: exworker
+        env:
+        - name: DB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: voteapp-dotnet-external-db-secret
+              key: DB_CONNECTION_STRING

@@ -26,7 +26,7 @@ var pool = new Pool({
 });
 
 async.retry(
-  {times: 1000, interval: 1000},
+  {times: 1000, interval: 2000},
   function(callback) {
     pool.connect(function(err, client, done) {
       if (err) {
@@ -70,6 +70,26 @@ function collectVotesFromResult(result) {
 app.use(cookieParser());
 app.use(express.urlencoded());
 app.use(express.static(__dirname + '/views'));
+
+app.get('/raw', function (req, res) {
+  pool.query('SELECT vote, COUNT(id) AS count FROM votes GROUP BY vote', [], function(err, result) {
+    if (err) {
+      res.status(500).send("Error performing query: " + err);
+    } else {
+      res.json(result.rows);
+    }
+  });
+});
+
+app.get('/raw2', function (req, res) {
+  pool.query('SELECT * FROM votes', [], function(err, result) {
+    if (err) {
+      res.status(500).send("Error performing query: " + err);
+    } else {
+      res.json(result.rows);
+    }
+  });
+});
 
 app.get('/', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/views/index.html'));
